@@ -157,3 +157,10 @@ Achou e corrigiu um bug ou tem alguma feature em mente e deseja contribuir?
   [.NET Framework]: http://www.microsoft.com/net
   [GitHub]: https://github.com/pagseguro/pagseguro-sdk-dotnet
   [documentação oficial]: https://pagseguro.uol.com.br/v2/guia-de-integracao/documentacao-da-biblioteca-pagseguro-netframework.html
+
+Publicação
+----------
+---
+Compilar Uol.PagSeguro.csproj em modo Release
+executar o comando a seguir:
+nuget pack Eklesia.Uol.PagSeguro.nuspec
