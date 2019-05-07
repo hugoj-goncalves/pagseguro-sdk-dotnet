@@ -56,6 +56,5 @@ namespace Uol.PagSeguro.Service
             builder.EncodeCredentialsAsQueryString(credentials);
             return builder.ToString();
         }
-
     }
 }
