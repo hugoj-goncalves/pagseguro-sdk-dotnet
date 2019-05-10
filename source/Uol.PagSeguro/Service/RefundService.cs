@@ -46,7 +46,7 @@ namespace Uol.PagSeguro.Service
             
             try {
                 using(HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.RefundUri.AbsoluteUri, BuildRefundURL(credentials, transactionCode, refundValue)))
+                    PagSeguroConfiguration.RefundUri.AbsoluteUri, BuildRefundURL(credentials, transactionCode, refundValue), credentials.IsSandbox()))
                 {
             
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))

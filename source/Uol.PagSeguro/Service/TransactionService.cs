@@ -48,11 +48,15 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.TransactionsUri.AbsoluteUri, BuildTransactionUrl(credentials, checkout)))
+                    PagSeguroConfiguration.TransactionsUri.AbsoluteUri,
+                    BuildTransactionUrl(credentials, checkout),
+                    credentials.IsSandbox()
+                    )
+                )
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
-                        
+
                         Transaction transaction = new Transaction();
                         TransactionSerializer.Read(reader, transaction);
                         PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "TransactionService.Register() - end {0}", transaction));
@@ -67,7 +71,6 @@ namespace Uol.PagSeguro.Service
                 throw pse;
             }
         }
-
 
         /// <summary>
         /// 
@@ -91,5 +94,5 @@ namespace Uol.PagSeguro.Service
             return builder.ToString();
         }
 
-     }
+    }
 }

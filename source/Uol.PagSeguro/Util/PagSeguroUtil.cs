@@ -13,8 +13,10 @@
 //   limitations under the License.
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Uol.PagSeguro.Domain;
 
 namespace Uol.PagSeguro.Util
 {
@@ -47,7 +49,7 @@ namespace Uol.PagSeguro.Util
         {
             return value.Replace("( +)", " ").Trim();
         }
-        
+
         /// <summary>
         /// Format a String dropping extra spaces and truncate value
         /// </summary>
@@ -75,7 +77,7 @@ namespace Uol.PagSeguro.Util
         /// </summary>
         /// <param name="numeric"></param>
         /// <returns></returns>
-        public static string DecimalFormat(decimal numeric) 
+        public static string DecimalFormat(decimal numeric)
         {
             return string.Format("{0:0.00}", numeric).Replace(",", ".");
         }
@@ -121,6 +123,30 @@ namespace Uol.PagSeguro.Util
             date.ToUniversalTime();
             date.AddHours(-3);
             return XmlConvert.ToString(date, XmlDateTimeSerializationMode.RoundtripKind);
+        }
+
+        public static bool IsSandbox(this Credentials credentials)
+        {
+            var sandboxAttribute = credentials.Attributes.FirstOrDefault(m => m.Name == AccountCredentials.SandboxParameterName);
+            if (sandboxAttribute == null) return false;
+
+            var sandboxValue = sandboxAttribute.Value;
+            return sandboxValue == "yes" || sandboxValue == "y" ||
+                   sandboxValue == "sim" || sandboxValue == "s" ||
+                   sandboxValue == "true" || sandboxValue == "t";
+        }
+
+        public static string GetSandboxedUri(string urlPath)
+        {
+            if (!urlPath.Contains("sandbox.pagseguro.uol"))
+                return urlPath.Replace("pagseguro.uol", "sandbox.pagseguro.uol");
+            return urlPath;
+        }
+
+        public static Uri GetSandboxedUri(Uri urlPath)
+        {
+            var newPath = GetSandboxedUri(urlPath.AbsoluteUri);
+            return new Uri(newPath);
         }
     }
 }

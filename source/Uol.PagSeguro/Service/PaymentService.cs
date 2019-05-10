@@ -50,7 +50,7 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.PaymentUri.AbsoluteUri, BuildCheckoutUrl(credentials, payment)))
+                    PagSeguroConfiguration.PaymentUri.AbsoluteUri, BuildCheckoutUrl(credentials, payment), credentials.IsSandbox()))
                 {
 
                     if (HttpStatusCode.OK.Equals(response.StatusCode))
@@ -60,7 +60,9 @@ namespace Uol.PagSeguro.Service
                             PaymentRequestResponse paymentResponse = new PaymentRequestResponse(PagSeguroConfiguration.PaymentRedirectUri);
                             PaymentSerializer.Read(reader, paymentResponse);
                             PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "PaymentService.Register({0}) - end {1}", payment, paymentResponse.PaymentRedirectUri));
-                            return paymentResponse.PaymentRedirectUri;
+                            return credentials.IsSandbox() 
+                                ? PagSeguroUtil.GetSandboxedUri(paymentResponse.PaymentRedirectUri) 
+                                : paymentResponse.PaymentRedirectUri;
                         }
                     }
                     else

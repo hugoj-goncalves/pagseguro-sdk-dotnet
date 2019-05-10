@@ -51,7 +51,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, preApprovalCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, preApprovalCode), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -82,7 +82,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByNotification(credentials, notificationCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByNotification(credentials, notificationCode), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -114,7 +114,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByInterval(credentials, interval)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByInterval(credentials, interval), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -148,7 +148,7 @@ namespace Uol.PagSeguro.Service
             PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "PreApprovalSearchService.SearchByDate(initialDate={0} - finalDate={1}) - begin", initialDate, finalDate));
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -183,7 +183,7 @@ namespace Uol.PagSeguro.Service
             PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "PreApprovalSearchService.SearchByReference(reference={0}) - begin", reference));
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByReference(credentials, reference, initialDate, finalDate, pageNumber, resultsPerPage)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByReference(credentials, reference, initialDate, finalDate, pageNumber, resultsPerPage), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {

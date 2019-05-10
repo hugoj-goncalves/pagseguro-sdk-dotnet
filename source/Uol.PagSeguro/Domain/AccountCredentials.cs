@@ -24,6 +24,7 @@ namespace Uol.PagSeguro.Domain
     {
         private const string EmailParameterName = "email";
         private const string TokenParameterName = "token";
+        public const string SandboxParameterName = "sandbox";
 
         /// <summary>
         /// Initializes a new instance of the AccountCredentials class
@@ -33,10 +34,11 @@ namespace Uol.PagSeguro.Domain
         /// <remarks>
         /// A PagSeguro account is identified by an email and a security token
         /// </remarks>
-        public  AccountCredentials(string email, string token)
+        public  AccountCredentials(string email, string token, string sandbox = "no")
         {
             this.AttributeDictionary[EmailParameterName] = email;
             this.AttributeDictionary[TokenParameterName] = token;
+            this.AttributeDictionary[SandboxParameterName] = sandbox;
         }
 
         /// <summary>
@@ -66,6 +68,21 @@ namespace Uol.PagSeguro.Domain
             set
             {
                 this.AttributeDictionary[TokenParameterName] = value;
+            }
+        }
+
+        /// <summary>
+        /// Sandbox
+        /// </summary>
+        public string Sandbox
+        {
+            get
+            {
+                return this.AttributeDictionary[SandboxParameterName];
+            }
+            set
+            {
+                this.AttributeDictionary[SandboxParameterName] = value;
             }
         }
     }

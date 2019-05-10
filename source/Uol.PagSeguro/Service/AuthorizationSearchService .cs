@@ -52,7 +52,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, code))) 
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, code), credentials.IsSandbox())) 
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -87,7 +87,11 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using(HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage)))
+                using(HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(
+                        BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage),
+                        credentials.IsSandbox()
+                    )
+                )
                 {
                     using(XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {

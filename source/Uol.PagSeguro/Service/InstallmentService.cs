@@ -31,7 +31,7 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(
-                    BuildInstallmentURL(credentials, amount, cardBrand, maxInstallmentNoInterest)))
+                    BuildInstallmentURL(credentials, amount, cardBrand, maxInstallmentNoInterest), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {

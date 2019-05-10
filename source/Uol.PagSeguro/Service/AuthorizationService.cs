@@ -49,16 +49,19 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.AuthorizarionRequestUri.AbsoluteUri, buildAuthorizationRequestUrl(credentials, authorizationRequest))) 
+                    PagSeguroConfiguration.AuthorizarionRequestUri.AbsoluteUri, buildAuthorizationRequestUrl(credentials, authorizationRequest), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
                         AuthorizationResponse authorization = new AuthorizationResponse();
                         AuthorizationSerializer.Read(reader, authorization);
 
-                        if (onlyAuthorizationCode) {
+                        if (onlyAuthorizationCode)
+                        {
                             return authorization.Code;
-                        } else {
+                        }
+                        else
+                        {
                             return BuildAuthorizationURL(authorization.Code);
                         }
                     }
@@ -107,7 +110,7 @@ namespace Uol.PagSeguro.Service
             {
                 builder.Append(pair.Key, pair.Value.ToString(CultureInfo.InvariantCulture));
             }
- 
+
             return HttpUtility.UrlDecode(builder.ToString());
         }
     }

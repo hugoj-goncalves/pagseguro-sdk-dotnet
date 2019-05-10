@@ -50,7 +50,7 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.PreApprovalUri.AbsoluteUri, BuildPreApprovalUrl(credentials, preApproval)))
+                    PagSeguroConfiguration.PreApprovalUri.AbsoluteUri, BuildPreApprovalUrl(credentials, preApproval), credentials.IsSandbox()))
                 {
 
                     if (HttpStatusCode.OK.Equals(response.StatusCode))
@@ -92,7 +92,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildCancelUrl(credentials, preApprovalCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildCancelUrl(credentials, preApprovalCode), credentials.IsSandbox()))
                 {
 
                     if (HttpStatusCode.OK.Equals(response.StatusCode))
@@ -135,7 +135,7 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.PreApprovalPaymentUri.AbsoluteUri, BuildChargeUrl(credentials, payment)))
+                    PagSeguroConfiguration.PreApprovalPaymentUri.AbsoluteUri, BuildChargeUrl(credentials, payment), credentials.IsSandbox()))
                 {
                     
                     if (HttpStatusCode.OK.Equals(response.StatusCode))

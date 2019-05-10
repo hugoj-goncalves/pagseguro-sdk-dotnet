@@ -49,7 +49,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, transactionCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByCode(credentials, transactionCode), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -81,7 +81,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByReference(credentials, reference)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByReference(credentials, reference), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -116,7 +116,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlByDate(credentials, initialDate, finalDate, pageNumber, resultsPerPage), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -151,7 +151,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlAbandoned(credentials, initialDate, finalDate, pageNumber, resultsPerPage)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildSearchUrlAbandoned(credentials, initialDate, finalDate, pageNumber, resultsPerPage), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {

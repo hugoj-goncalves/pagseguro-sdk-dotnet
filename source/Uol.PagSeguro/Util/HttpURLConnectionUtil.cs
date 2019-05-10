@@ -79,10 +79,10 @@ namespace Uol.PagSeguro.Util
         /// <param name="urlPath"></param>
         /// <param name="query"></param>
         /// <returns></returns>
-        internal static HttpWebResponse GetHttpPostConnection(string urlPath, string query)
+        internal static HttpWebResponse GetHttpPostConnection(string urlPath, string query, bool sandbox)
         {
             string contentType = PagSeguroConfiguration.FormUrlEncoded + "; charset= " + PagSeguroConfiguration.Encoding;
-            return GetHttpURLConnection(HttpURLConnectionUtil.PostMethod, contentType, urlPath, query);
+            return GetHttpURLConnection(HttpURLConnectionUtil.PostMethod, contentType, urlPath, query, sandbox);
         }
 
         /// <summary>
@@ -90,10 +90,10 @@ namespace Uol.PagSeguro.Util
         /// </summary>
         /// <param name="urlPath"></param>
         /// <returns></returns>
-        internal static HttpWebResponse GetHttpGetConnection(string urlPath)
+        internal static HttpWebResponse GetHttpGetConnection(string urlPath, bool sandbox)
         {
             string contentType = PagSeguroConfiguration.FormUrlEncoded + "; charset= " + PagSeguroConfiguration.Encoding;
-            return GetHttpURLConnection(HttpURLConnectionUtil.GetMethod, contentType, urlPath, null);
+            return GetHttpURLConnection(HttpURLConnectionUtil.GetMethod, contentType, urlPath, null, sandbox);
         }
 
         /// <summary>
@@ -104,12 +104,13 @@ namespace Uol.PagSeguro.Util
         /// <param name="urlPath"></param>
         /// <param name="query"></param>
         /// <returns></returns>
-        private static HttpWebResponse GetHttpURLConnection(string method, string contentType, string urlPath, string query)
+        private static HttpWebResponse GetHttpURLConnection(string method, string contentType, string urlPath, string query, bool sandbox)
         {
-            HttpWebRequest request;
             try
             {
-                request = (HttpWebRequest) WebRequest.Create(urlPath);
+                if (sandbox) urlPath = PagSeguroUtil.GetSandboxedUri(urlPath);
+
+                var request = (HttpWebRequest) WebRequest.Create(urlPath);
 
                 request.ContentType = contentType;
                 request.Method = method;
@@ -146,6 +147,5 @@ namespace Uol.PagSeguro.Util
                 throw exception;
             }
         }
-
     }
 }

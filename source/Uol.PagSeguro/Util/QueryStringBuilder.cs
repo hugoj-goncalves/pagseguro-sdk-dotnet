@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using Uol.PagSeguro.Domain;
@@ -143,7 +144,7 @@ namespace Uol.PagSeguro.Util
         /// <returns></returns>
         public QueryStringBuilder EncodeCredentialsAsQueryString(Credentials credentials)
         {
-            foreach (CredentialsNameValuePair nv in credentials.Attributes)
+            foreach (CredentialsNameValuePair nv in credentials.Attributes.Where(m => m.Name != AccountCredentials.SandboxParameterName))
             {
                 if (nv.Value.Length > 0)
                 {

@@ -46,7 +46,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildTransactionNotificationUrl(credentials,notificationCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildTransactionNotificationUrl(credentials, notificationCode), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -80,7 +80,7 @@ namespace Uol.PagSeguro.Service
 
             try
             {
-                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildAuthorizationNotificationUrl(credentials, notificationCode)))
+                using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpGetConnection(BuildAuthorizationNotificationUrl(credentials, notificationCode), credentials.IsSandbox()))
                 {
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
                     {
@@ -107,14 +107,14 @@ namespace Uol.PagSeguro.Service
         /// <param name="credentials"></param>
         /// <param name="notificationCode"></param>
         /// <returns></returns>
-        private static string BuildTransactionNotificationUrl(Credentials credentials, string notificationCode) 
+        private static string BuildTransactionNotificationUrl(Credentials credentials, string notificationCode)
         {
             QueryStringBuilder transactionNotificationUrl = new QueryStringBuilder("{url}/{notificationCode}?{credential}");
             transactionNotificationUrl.ReplaceValue("{url}", PagSeguroConfiguration.NotificationUri.AbsoluteUri);
             transactionNotificationUrl.ReplaceValue("{notificationCode}", HttpUtility.UrlEncode(notificationCode));
             transactionNotificationUrl.ReplaceValue("{credential}", new QueryStringBuilder().EncodeCredentialsAsQueryString(credentials).ToString());
             return transactionNotificationUrl.ToString();
-	    }
+        }
 
         /// <summary>
         /// 

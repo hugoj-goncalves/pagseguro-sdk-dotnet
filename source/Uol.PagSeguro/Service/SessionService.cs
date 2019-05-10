@@ -29,7 +29,7 @@ namespace Uol.PagSeguro.Service
             try
             {
                 using (HttpWebResponse response = HttpURLConnectionUtil.GetHttpPostConnection(
-                    PagSeguroConfiguration.SessionUri.AbsoluteUri, BuildSessionURL(credentials)))
+                    PagSeguroConfiguration.SessionUri.AbsoluteUri, BuildSessionURL(credentials), credentials.IsSandbox()))
                 {
 
                     using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
