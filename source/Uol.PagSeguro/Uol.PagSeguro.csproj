@@ -1,13 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageId>Uol.PagSeguro</PackageId>
-    <Authors>Uol.PagSeguro</Authors>
+    <PackageId>Eklesia.Uol.PagSeguro</PackageId>
+    <Authors>Uol.PagSeguro, Eklesia</Authors>
     <Company>UOL</Company>
+    <Owners>Eklesia</Owners>
     <Product>PagSeguro</Product>
+    <PackageProjectUrl>https://github.com/hugoj-goncalves/pagseguro-sdk-dotnet</PackageProjectUrl>
+    <PackageTags>eklesia;pagseguro</PackageTags>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/123060</PackageIconUrl>
+    <Copyright>Copyright 2014-2019 PagSeguro Internet LTDA &amp; Contributors</Copyright>
+    <Version>3.0.3</Version>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
+    <Reference Include="System.Web" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />

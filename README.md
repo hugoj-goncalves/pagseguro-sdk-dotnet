@@ -163,4 +163,4 @@ Publicação
 ---
 Compilar Uol.PagSeguro.csproj em modo Release
 executar o comando a seguir:
-nuget pack Eklesia.Uol.PagSeguro.nuspec
+dotnet pack -c "Release" source/Uol.PagSeguro/Uol.PagSeguro.csproj
