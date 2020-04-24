@@ -10,7 +10,8 @@
     <Product>PagSeguro</Product>
     <PackageProjectUrl>https://github.com/hugoj-goncalves/pagseguro-sdk-dotnet</PackageProjectUrl>
     <PackageTags>eklesia;pagseguro</PackageTags>
-    <PackageIconUrl>https://avatars3.githubusercontent.com/u/123060</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>LICENSE-2.0.txt</PackageLicenseFile>
     <Copyright>Copyright 2014-2019 PagSeguro Internet LTDA &amp; Contributors</Copyright>
     <Version>3.0.3</Version>
   </PropertyGroup>
@@ -21,6 +22,9 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="..\..\LICENSE-2.0.txt" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
