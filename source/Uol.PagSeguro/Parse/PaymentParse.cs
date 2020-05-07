@@ -18,6 +18,7 @@ using Uol.PagSeguro.Util;
 using Uol.PagSeguro.Constants.PreApproval;
 using Uol.PagSeguro.Constants;
 using System;
+using System.Linq;
 
 namespace Uol.PagSeguro.Parse
 {
@@ -329,7 +330,11 @@ namespace Uol.PagSeguro.Parse
                         {
                             acceptGroupList.Add(item.Group);
                         }
-                        acceptNameList = item.Name;
+
+                        if (item.Name != null && item.Name.Any())
+                        {
+                            acceptNameList = item.Name;
+                        }
                     }
                     if (item.GetType() == typeof(ExcludePaymentMethod))
                     {
@@ -337,7 +342,11 @@ namespace Uol.PagSeguro.Parse
                         {
                             excludeGroupList.Add(item.Group);
                         }
-                        excludeNameList = item.Name;
+
+                        if (item.Name != null && item.Name.Any())
+                        {
+                            excludeNameList = item.Name;
+                        }
                     }
                 }
 
