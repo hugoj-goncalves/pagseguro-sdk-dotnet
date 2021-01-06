@@ -34,33 +34,31 @@ namespace SearchTransactionByReference
             try
             {
 
-                AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+                AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
                 // Realizando a consulta
                 TransactionSearchResult result = TransactionSearchService.SearchByReference(credentials, referenceCode);
 
                 if (result.Transactions.Count <= 0)
                 {
-                    Console.WriteLine("Nenhuma transação encontrada com a referência " + referenceCode);
+             
                 }
                 foreach (TransactionSummary transaction in result.Transactions)
                 {
-                    Console.WriteLine("Começando listagem de transações - \n");
-                    Console.WriteLine(transaction.ToString());
-                    Console.WriteLine(" - Terminando listagem de transações ");
+
                 }
-                Console.ReadKey();
+
 
             }
             catch (PagSeguroServiceException exception)
             {
-                Console.WriteLine(exception.Message + "\n");
+    
 
                 foreach (ServiceError element in exception.Errors)
                 {
-                    Console.WriteLine(element + "\n");
+        
                 }
-                Console.ReadKey();
+               
             }
            
         }

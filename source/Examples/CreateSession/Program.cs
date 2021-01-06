@@ -33,22 +33,20 @@ namespace CreateSession
 
             try
             {
-                AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+                AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
                 Session result = SessionService.CreateSession(credentials);
 
-                Console.WriteLine(result.ToString());
-                Console.ReadKey();
+           
             }
             catch (PagSeguroServiceException exception)
             {
-                Console.WriteLine(exception.Message + "\n");
 
                 foreach (ServiceError element in exception.Errors)
                 {
-                    Console.WriteLine(element + "\n");
+             
                 }
-                Console.ReadKey();
+         
             }
         }
     }

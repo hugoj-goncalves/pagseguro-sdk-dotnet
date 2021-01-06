@@ -37,14 +37,12 @@ namespace DocExamples
                     );
 
             paymentRequest.Sender = sender;
-            if (paymentRequest.Sender != null)
+            if (paymentRequest.Sender)
             {
-                Console.WriteLine(paymentRequest.Sender.Name);
-                Console.WriteLine(paymentRequest.Sender.Email);
-                if (paymentRequest.Sender.Phone != null)
+
+                if (paymentRequest.Sender.Phone)
                 {
-                    Console.WriteLine(paymentRequest.Sender.Phone.AreaCode);
-                    Console.WriteLine(paymentRequest.Sender.Phone.Number);
+
                 }
             }
 
@@ -117,7 +115,7 @@ namespace DocExamples
 
             EnvironmentConfiguration.ChangeEnvironment(isSandbox);
 
-            AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+            AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
             // Criando o código de requisição de pagamento
             // e obtendo a URL da página de pagamento
@@ -133,7 +131,7 @@ namespace DocExamples
 
             EnvironmentConfiguration.ChangeEnvironment(isSandbox);
 
-            AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+            AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
             string notificationType = Request.Form["notificationType"];
             string notificationCode = Request.Form["notificationCode"];
@@ -154,15 +152,14 @@ namespace DocExamples
 
             EnvironmentConfiguration.ChangeEnvironment(isSandbox);
 
-            AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+            AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
             string transactionCode = "59A13D84-52DA-4AB8-B365-1E7D893052B0";
 
             Transaction transaction =
                 TransactionSearchService.SearchByCode(credentials, transactionCode);
 
-            Console.WriteLine(transaction.TransactionStatus);
-            Console.WriteLine(transaction.GrossAmount);
+
         }
 
         static void PaymentMethodExample(Transaction transaction)
@@ -222,14 +219,12 @@ namespace DocExamples
 
         static void Shipping2Example(Transaction transaction)
         {
-            if (transaction.Shipping != null)
+            if (transaction.Shipping)
             {
-                Console.WriteLine(transaction.Shipping.ShippingType);
-                Console.WriteLine(transaction.Shipping.Cost);
-                if (transaction.Shipping.Address != null)
+
+                if (transaction.Shipping.Address)
                 {
-                    Console.WriteLine(transaction.Shipping.Address.Street);
-                    Console.WriteLine(transaction.Shipping.Address.Number);
+
                 }
             }
         }
@@ -252,10 +247,7 @@ namespace DocExamples
         {
             foreach (Item item in paymentRequest.Items)
             {
-                Console.WriteLine(item.Id);
-                Console.WriteLine(item.Description);
-                Console.WriteLine(item.Quantity);
-                Console.WriteLine(item.Amount);
+
             }
         }
 
@@ -265,7 +257,7 @@ namespace DocExamples
 
             EnvironmentConfiguration.ChangeEnvironment(isSandbox);
 
-            AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+            AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
             // Código identificador da transação  
             string transactionCode = "59A13D84-52DA-4AB8-B365-1E7D893052B0";
@@ -278,7 +270,7 @@ namespace DocExamples
                     transactionCode);
 
             // Imprime o status da transação
-            Console.WriteLine(transaction.TransactionStatus);
+      
         }
 
         static void SearchByDateExample()
@@ -287,7 +279,7 @@ namespace DocExamples
 
             EnvironmentConfiguration.ChangeEnvironment(isSandbox);
 
-            AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+            AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
             // Definindo a data de ínicio da consulta 
             DateTime initialDate = new DateTime(2011, 06, 1, 08, 50, 0);
