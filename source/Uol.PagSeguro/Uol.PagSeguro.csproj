@@ -12,8 +12,8 @@
     <PackageTags>eklesia;pagseguro</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE-2.0.txt</PackageLicenseFile>
-    <Copyright>Copyright 2014-2019 PagSeguro Internet LTDA &amp; Contributors</Copyright>
-    <Version>3.0.4</Version>
+    <Copyright>Copyright 2014-2021 PagSeguro Internet LTDA &amp; Contributors</Copyright>
+    <Version>3.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
@@ -23,8 +23,8 @@
   <ItemGroup>
     <Folder Include="Properties\" />
 
-    <None Include="..\..\icon.png" Pack="true" PackagePath="\"/>
-    <None Include="..\..\LICENSE-2.0.txt" Pack="true" PackagePath="\"/>
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE-2.0.txt" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

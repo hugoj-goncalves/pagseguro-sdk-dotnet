@@ -52,5 +52,10 @@ namespace Uol.PagSeguro.Domain
         /// Direct Deposit
         /// </summary>
         public const int DirectDeposit = 7;
+
+        /// <summary>
+        /// Pix
+        /// </summary>
+        public const int Pix = 11;
     }
 }
