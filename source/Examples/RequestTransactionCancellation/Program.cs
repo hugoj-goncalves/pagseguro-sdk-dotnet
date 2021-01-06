@@ -36,24 +36,23 @@ namespace CancelPreApproval
             try
             {
 
-                AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+                AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
 
                 // TODO: Substitute the code below with a valid transaction code for your transaction
                 RequestResponse result = CancelService.RequestCancel(credentials, transactionCode);
 
-                Console.WriteLine(result.ToString());
-
-                Console.ReadKey();
+       
+              
             }
             catch (PagSeguroServiceException exception)
             {
-                Console.WriteLine(exception.Message + "\n");
+               
 
                 foreach (ServiceError element in exception.Errors)
                 {
-                    Console.WriteLine(element + "\n");
+                
                 }
-                Console.ReadKey();
+             
             }
         }
     }

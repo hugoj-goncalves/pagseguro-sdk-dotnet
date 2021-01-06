@@ -37,7 +37,7 @@ namespace FindPreApprovalByDate
             try
             {
 
-                AccountCredentials credentials = PagSeguroConfiguration.Credentials(isSandbox);
+                AccountCredentials credentials = PagSeguroConfiguration.GetAccountCredentials(isSandbox);
                 PreApprovalSearchResult result = 
                     PreApprovalSearchService.SearchByDate(
                         credentials, 
@@ -49,27 +49,25 @@ namespace FindPreApprovalByDate
 
                 if (result.PreApprovals.Count <= 0)
                 {
-                    Console.WriteLine("Nenhuma assinatura");
+                
                 }
 
                 foreach (PreApprovalSummary preApproval in result.PreApprovals)
                 {
-                    Console.WriteLine("Começando listagem de assinaturas - \n");
-                    Console.WriteLine(preApproval.ToString());
-                    Console.WriteLine(" - Terminando listagem de assinaturas ");
+       
                 }
 
-                Console.ReadKey();
+           
             }
             catch (PagSeguroServiceException exception)
             {
-                Console.WriteLine(exception.Message + "\n");
+         
 
                 foreach (ServiceError element in exception.Errors)
                 {
-                    Console.WriteLine(element + "\n");
+              
                 }
-                Console.ReadKey();
+           
             }
         }
     }

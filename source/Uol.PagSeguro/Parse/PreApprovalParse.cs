@@ -34,51 +34,96 @@ namespace Uol.PagSeguro.Parse
             IDictionary<string, string> data = new Dictionary<string, string>();
 
             // reference
-            if (preApproval.Reference != null)
-            {
+            if (preApproval.Reference)
                 data["reference"] = preApproval.Reference;
-            }
 
             // sender
-            if (preApproval.Sender != null)
+            if (preApproval.Sender)
             {
-
-                if (preApproval.Sender.Name != null)
-                {
+                if (preApproval.Sender.Name)
                     data["senderName"] = preApproval.Sender.Name;
-                }
-                if (preApproval.Sender.Email != null)
-                {
+
+                if (preApproval.Sender.Email)
                     data["senderEmail"] = preApproval.Sender.Email;
-                }
 
                 // phone
-                if (preApproval.Sender.Phone != null)
+                if (preApproval.Sender.Phone)
                 {
-                    if (preApproval.Sender.Phone.AreaCode != null)
-                    {
+                    if (preApproval.Sender.Phone.AreaCode)
                         data["senderAreaCode"] = preApproval.Sender.Phone.AreaCode;
-                    }
-                    if (preApproval.Sender.Phone.Number != null)
-                    {
+
+                    if (preApproval.Sender.Phone.Number)
                         data["senderPhone"] = preApproval.Sender.Phone.Number;
-                    }
                 }
 
                 // documents
-                if (preApproval.Sender.Documents != null)
+                if (preApproval.Sender.Documents)
                 {
                     var documents = preApproval.Sender.Documents;
                     if (documents.Count == 1)
                     {
-                        foreach (SenderDocument document in documents)
+                        foreach (var document in documents)
                         {
-                            if (document != null)
-                            {
+                            if (document)
                                 data["senderCPF"] = document.Value;
-                            }
                         }
                     }
+                }
+
+                // address
+                if (preApproval.Sender.Address)
+                {
+                    var address = preApproval.Sender.Address;
+                    
+                    // country
+                    if (address.Country)
+                    {
+                        data["senderAddressCountry"] = address.Country;
+                    }
+
+                    // state
+                    if (address.State)
+                    {
+                        data["senderAddressState"] = address.State;
+                    }
+
+                    // city
+                    if (address.City)
+                    {
+                        data["senderAddressCity"] = address.City;
+                    }
+
+                    // PostalCode
+                    if (address.PostalCode)
+                    {
+                        data["senderAddressPostalCode"] = address.PostalCode;
+                    }
+
+                    // PostalCode
+                    if (address.District)
+                    {
+                        data["senderAddressDistrict"] = address.District;
+                    }
+
+                    // Complement
+                    if (address.Complement)
+                    {
+                        data["senderAddressComplement"] = address.Complement;
+                    }
+
+                    // Address Number
+                    if (address.Number)
+                    {
+                        data["senderAddressNumber"] = address.Number;
+                    }
+
+                    // Street
+                    if (address.Street)
+                    {
+                        data["senderAddressStreet"] = address.Street;
+                    }
+
+
                 }
             }
 
@@ -99,7 +144,10 @@ namespace Uol.PagSeguro.Parse
                 if (preApproval.PreApproval.Period == Period.Yearly)
                     data["preApprovalDayOfYear"] = preApproval.PreApproval.DayOfYear.ToString();
 
-                if (preApproval.PreApproval.Period == Period.Monthly || preApproval.PreApproval.Period == Period.Bimonthly || preApproval.PreApproval.Period == Period.Trimonthly || preApproval.PreApproval.Period == Period.SemiAnnually)
+                if (preApproval.PreApproval.Period == Period.Monthly ||
+                    preApproval.PreApproval.Period == Period.Bimonthly ||
+                    preApproval.PreApproval.Period == Period.Trimonthly ||
+                    preApproval.PreApproval.Period == Period.SemiAnnually)
                     data["preApprovalDayOfMonth"] = preApproval.PreApproval.DayOfMonth.ToString();
 
                 if (preApproval.PreApproval.Period == Period.Weekly)
@@ -107,69 +155,56 @@ namespace Uol.PagSeguro.Parse
             }
 
             // currency
-            if (preApproval.Currency != null)
-            {
+            if (preApproval.Currency)
                 data["currency"] = preApproval.Currency;
-            }
 
             // redirectURL
-            if (preApproval.RedirectUri != null)
-            {
+            if (preApproval.RedirectUri)
                 data["redirectURL"] = preApproval.RedirectUri.ToString();
-            }
 
             // redirectURL
-            if (preApproval.ReviewUri != null)
-            {
+            if (preApproval.ReviewUri)
                 data["reviewUrl"] = preApproval.ReviewUri.ToString();
-            }
 
             // notificationURL
-            if (preApproval.NotificationURL != null)
-            {
+            if (preApproval.NotificationURL)
                 data["notificationURL"] = preApproval.NotificationURL;
-            }
 
             // metadata
             if (preApproval.MetaData.Items.Count > 0)
             {
-                int i = 0;
+                var i = 0;
                 var metaDataItems = preApproval.MetaData.Items;
-                foreach (MetaDataItem item in metaDataItems)
+                foreach (var item in metaDataItems)
                 {
-                    if (!PagSeguroUtil.IsEmpty(item.Key) && !PagSeguroUtil.IsEmpty(item.Value))
-                    {
-                        i++;
-                        data["metadataItemKey" + i] = item.Key;
-                        data["metadataItemValue" + i] = item.Value;
+                    if (PagSeguroUtil.IsEmpty(item.Key) || PagSeguroUtil.IsEmpty(item.Value))
+                        continue;
 
-                        if (item.Group != null)
-                        {
-                            data["metadataItemGroup" + i] = item.Group.ToString();
-                        }
-                    }
+                    i++;
+                    data["metadataItemKey" + i] = item.Key;
+                    data["metadataItemValue" + i] = item.Value;
+
+                    if (item.Group)
+                        data["metadataItemGroup" + i] = item.Group.ToString();
                 }
             }
 
             // parameter
-            if (preApproval.Parameter.Items.Count > 0)
+            if (preApproval.Parameter.Items.Count <= 0)
+                return data;
+
+            var parameterItems = preApproval.Parameter.Items;
+            foreach (var item in parameterItems)
             {
-                var parameterItems = preApproval.Parameter.Items;
-                foreach (ParameterItem item in parameterItems)
-                {
-                    if (!PagSeguroUtil.IsEmpty(item.Key) && !PagSeguroUtil.IsEmpty(item.Value))
-                    {
-                        if (item.Group != null)
-                        {
-                            data[item.Key + "" + item.Group] = item.Value;
-                        }
-                        else
-                        {
-                            data[item.Key] = item.Value;
-                        }
-                    }
-                }
+                if (PagSeguroUtil.IsEmpty(item.Key) || PagSeguroUtil.IsEmpty(item.Value))
+                    continue;
+
+                if (item.Group)
+                    data[item.Key + "" + item.Group] = item.Value;
+                else
+                    data[item.Key] = item.Value;
             }
+
             return data;
         }
     }

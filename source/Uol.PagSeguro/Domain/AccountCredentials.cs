@@ -13,7 +13,7 @@
 //   limitations under the License.
 
 using System;
-using Uol.PagSeguro.Util;
+using Uol.PagSeguro.Resources;
 
 namespace Uol.PagSeguro.Domain
 {
